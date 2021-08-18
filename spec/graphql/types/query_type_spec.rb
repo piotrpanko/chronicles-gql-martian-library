@@ -1,7 +1,9 @@
-require "rails_helper"
+# frozen_string_literal: true
+
+require 'rails_helper'
 
 RSpec.describe Types::QueryType do
-  describe "items" do
+  describe 'items' do
     let!(:items) { create_pair(:item) }
 
     let(:query) do
@@ -12,13 +14,10 @@ RSpec.describe Types::QueryType do
        })
     end
 
-    subject(:result) do
-      MartianLibrarySchema.execute(query).as_json
-    end
-
-    it "returns all items" do
-      expect(result.dig("data", "items")).to match_array(
-        items.map { |item| { "title" => item.title } }
+    it 'returns all items' do
+      result = MartianLibrarySchema.execute(query).as_json
+      expect(result.dig('data', 'items')).to match_array(
+        items.map { |item| { 'title' => item.title } }
       )
     end
   end
