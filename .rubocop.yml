@@ -6,6 +6,8 @@ AllCops:
     - 'lib/tasks/**/*'
     - 'config/**/*'
     - 'db/schema.rb'
+    - '*.spec'
+    - 'node_modules/**/*'
 Metrics/LineLength:
   Max: 120
 
