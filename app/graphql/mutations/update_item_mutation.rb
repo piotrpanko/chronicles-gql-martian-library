@@ -1,4 +1,3 @@
-
 # app/graphql/mutations/update_item_mutation.rb
 
 module Mutations

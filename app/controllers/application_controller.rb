@@ -1,9 +1,11 @@
-class ApplicationController < ActionController::Base
-    private
+# frozen_string_literal: true
 
-    def current_user
+class ApplicationController < ActionController::Base
+  private
+
+  def current_user
     token = request.headers["Authorization"].to_s
     email = Base64.decode64(token)
     User.find_by(email: email)
-    end
+  end
 end
