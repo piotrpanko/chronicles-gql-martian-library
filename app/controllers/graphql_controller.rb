@@ -1,13 +1,11 @@
 class GraphqlController < ApplicationController
   def execute
-    variables = ensure_hash(params[:variables])
-    query = params[:query]
-    operation_name = params[:operationName]
-    context = {
-      # Query context goes here, for example:
-      # current_user: current_user,
-    }
-    result = MartianLibrarySchema.execute(query, variables: variables, context: context, operation_name: operation_name)
+    result = MartianLibrarySchema.execute(
+      params[:query],
+      variables: ensure_hash(params[:variables]),
+      context: { current_user: current_user },
+      operation_name: params[:operationName]
+    )
     render json: result
   rescue StandardError => e
     raise e unless Rails.env.development?

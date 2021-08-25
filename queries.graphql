@@ -1,0 +1,47 @@
+mutation SignMeIn {
+  signIn(email: "john.doe@example.com") {
+    token
+    user {
+      id
+      fullName
+    }
+  }
+}
+
+
+query Me {
+  me {
+    id
+    fullName
+  }
+}
+
+query Items {
+    items {
+      id
+      title
+      user {
+        email
+      }
+    }
+}
+
+query {
+  items {
+      id
+      title
+      user {
+        email
+      }
+    }
+}
+
+{
+  items {
+      id
+      title
+      user {
+        email
+      }
+    }
+}
