@@ -4,7 +4,7 @@ module Types
     field :item,
           Types::ItemType,
           null: false,
-          description: 'Reruns single item' do
+          description: "Reruns single item" do
       argument :id, ID, required: true
     end
     field :items,
@@ -14,7 +14,7 @@ module Types
       argument :by_title, String, required: false
     end
 
-    def item(id: )
+    def item(id:)
       Item.find(id)
     end
 
