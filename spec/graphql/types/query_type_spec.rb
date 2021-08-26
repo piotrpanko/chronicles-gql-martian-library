@@ -80,27 +80,51 @@ RSpec.describe Types::QueryType do
       end
     end
     context "with_filtering" do
-      it "returns all items" do
-        create_list(:item, 2)
-        searched_item = create(:item)
+      context "with variables" do
+        it "returns all items" do
+          create_list(:item, 2)
+          searched_item = create(:item)
 
-        query =         <<~GRAPHQL
-          query {
-            items(byTitle: "#{searched_item.title}") {
-              title
+          query = <<~GRAPHQL
+            query ($byTitle: String){
+              items(byTitle: $byTitle) {
+                title
+              }
             }
-          }
-        GRAPHQL
+          GRAPHQL
 
-        result = MartianLibrarySchema.execute(
-          query,
-          variables: { items: { search_title: searched_item.title } }
-        ).as_json
-        expect(result["errors"]).to be_blank, result["errors"].inspect
-        expect(result.dig("data", "items").size).to eq(1)
-        expect(result.dig("data", "items")).to match_array(
-          [{ "title" => searched_item.title }]
-        )
+          result = MartianLibrarySchema.execute(
+            query,
+            variables: { "byTitle" => searched_item.title }
+          ).as_json
+          expect(result["errors"]).to be_blank, result["errors"].inspect
+          expect(result.dig("data", "items").size).to eq(1)
+          expect(result.dig("data", "items")).to match_array(
+            [{ "title" => searched_item.title }]
+          )
+        end
+      end
+
+      context "with interpolation" do
+        it "returns all items" do
+          create_list(:item, 2)
+          searched_item = create(:item)
+
+          query = <<~GRAPHQL
+            query {
+              items(byTitle: "#{searched_item.title}") {
+                title
+              }
+            }
+          GRAPHQL
+
+          result = MartianLibrarySchema.execute(query).as_json
+          expect(result["errors"]).to be_blank, result["errors"].inspect
+          expect(result.dig("data", "items").size).to eq(1)
+          expect(result.dig("data", "items")).to match_array(
+            [{ "title" => searched_item.title }]
+          )
+        end
       end
     end
   end
