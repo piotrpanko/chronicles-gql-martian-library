@@ -5,7 +5,7 @@ module Types
       field :item,
             Types::ItemType,
             null: false,
-            description: "Reruns single item" do
+            description: "Returns single item from the martian library" do
         argument :id, Types::BaseObject::ID, required: true
       end
 
