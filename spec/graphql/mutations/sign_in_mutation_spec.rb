@@ -26,10 +26,10 @@ RSpec.describe Mutations::SignInMutation do
       }
     ).as_json
 
-    expect(result).to match(
+    expect(result).to eq(
       "data" => {
         "signIn" => {
-          "token" => "dXNlci0xQGV4YW1wbGUuY29t",
+          "token" => Base64.encode64(user.email).strip,
           "user" => {
             "fullName" => "",
             "id" => user.id.to_s

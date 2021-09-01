@@ -1,4 +1,4 @@
-require "rspec"
+require "rails_helper"
 
 RSpec.describe Mutations::UpdateItemMutation do
   it "updates an item" do
