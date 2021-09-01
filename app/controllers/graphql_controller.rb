@@ -3,11 +3,14 @@ class GraphqlController < ApplicationController
     result = MartianLibrarySchema.execute(
       params[:query],
       variables: ensure_hash(params[:variables]),
-      # Only this line has chagned
       context: { current_user: current_user },
       operation_name: params[:operationName]
     )
     render json: result
+  rescue StandardError => e
+    raise e unless Rails.env.development?
+
+    handle_error_in_development e
   end
 
   private
@@ -30,10 +33,10 @@ class GraphqlController < ApplicationController
     end
   end
 
-  def handle_error_in_development(e)
-    logger.error e.message
-    logger.error e.backtrace.join("\n")
+  def handle_error_in_development(error)
+    logger.error error.message
+    logger.error error.backtrace.join("\n")
 
-    render json: { error: { message: e.message, backtrace: e.backtrace }, data: {} }, status: 500
+    render json: { error: { message: error.message, backtrace: error.backtrace }, data: {} }, status: 500
   end
 end

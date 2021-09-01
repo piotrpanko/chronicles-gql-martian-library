@@ -26,11 +26,6 @@ gem "jbuilder", "~> 2.5"
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", ">= 1.4.2", require: false
 
-group :development, :test do
-  # Call 'binding.pry' anywhere in the code to stop execution and get a debugger console
-  gem "pry-byebug", platforms: %i[mri mingw x64_mingw]
-end
-
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
   gem "listen", ">= 3.0.5", "< 3.2"

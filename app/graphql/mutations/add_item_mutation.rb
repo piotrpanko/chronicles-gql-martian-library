@@ -1,5 +1,3 @@
-# app/graphql/mutations/add_item_mutation.rb
-
 module Mutations
   class AddItemMutation < Mutations::BaseMutation
     argument :title, String, required: true
@@ -12,7 +10,7 @@ module Mutations
     def resolve(title:, description: nil, image_url: nil)
       if context[:current_user].nil?
         raise GraphQL::ExecutionError,
-              "You need to authenificate to perform this action"
+              "You need to authenticate to perform this action"
       end
 
       item = Item.new(
