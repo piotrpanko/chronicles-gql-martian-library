@@ -13,17 +13,21 @@ module Mutations
               "You need to authenticate to perform this action"
       end
 
-      item = Item.new(
+      form = CreateItemForm.new(
         title: title,
         description: description,
         image_url: image_url,
         user: context[:current_user]
       )
 
-      if item.save
-        { item: item }
+      service = CreateItemService.new(form: form)
+
+      if form.valid? && service.process
+        { item: service.item }
+      elsif form.invalid?
+        { errors: form.errors.full_messages }
       else
-        { errors: item.errors.full_messages }
+        { errors: service.errors.full_messages }
       end
     end
   end
